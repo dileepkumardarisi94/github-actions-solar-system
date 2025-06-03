@@ -14,25 +14,22 @@ jobs:
     unit-testing:
         name: Unit Testing
         runs-on: ubuntu-latest
+        container:
+          image: node:20
         steps:
         - name: Checkout Repository
           uses: actions/checkout@v4
 
-        - name: Setup NodeJS Version
-          uses: actions/setup-node@v4
-          with:
-            node-version: 20
-        
-        - name: Get npm cache directory
-          id: npm-cache-dir
-          shell: bash
-          run: echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
+        # - name: Setup NodeJS Version
+        #   uses: actions/setup-node@v4
+        #   with:
+        #     node-version: 20
 
         - name: Cache NPM dependencies
           uses: actions/cache@v4
           id: npm-cache
           with:
-            path: ${{ steps.npm-cache-dir.outputs.dir }}
+            path: ~/.npm
             key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
 
         - name: Install Dependencies
