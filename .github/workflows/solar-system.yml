@@ -23,11 +23,16 @@ jobs:
           with:
             node-version: 20
         
+        - name: Get npm cache directory
+          id: npm-cache-dir
+          shell: bash
+          run: echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
+
         - name: Cache NPM dependencies
           uses: actions/cache@v4
           id: npm-cache
           with:
-            path: ~/.npm
+            path: ${{ steps.npm-cache-dir.outputs.dir }}
             key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
 
         - name: Install Dependencies
