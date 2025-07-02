@@ -112,4 +112,4 @@ jobs:
         
         - name: kubectl version
           run: |
-          kubectl version -o yaml
+            kubectl version -o yaml
