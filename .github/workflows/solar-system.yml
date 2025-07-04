@@ -113,8 +113,7 @@ jobs:
             kubeconfig: ${{ secrets.KUBECONFIG }}
         
         - name: kubectl version
-          run: |
-            kubectl version -o yaml
+          run: kubectl version --short -o yaml
 
         - name: Fetch Inginix Controller IP
           run: |
