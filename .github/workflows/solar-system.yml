@@ -98,6 +98,8 @@ jobs:
       environment: 
         name: development
         url: https://github.com
+      outputs:
+        APP_INGRESS_URL: ${{ steps.ingress_ip.outputs.INGRESS_IP }}
       steps:
         - name: Checkout Repository
           uses: actions/checkout@v4
@@ -115,7 +117,8 @@ jobs:
         - name: kubectl version
           run: kubectl version -o yaml
 
-        - name: Fetch Inginix Controller IP
+        - id: ingress_ip
+          name: Fetch Inginix Controller IP
           run: |
             echo "INGRESS_IP=$(kubectl -n ingress-nginx get services ingress-nginx-controller -o jsonpath = '{.status.loadBalancer.ingress[0].ip}')" >> $GITHUB_ENV 
 
@@ -137,4 +140,4 @@ jobs:
       needs: dev-deploy
       uses: ./.github/workflows/reusable-workflow.yml
       with:
-        config-path: ${{ needs.dev-deploy.outputs.APP_INGRESS_URL }}
+        ingress-url: ${{ needs.dev-deploy.outputs.APP_INGRESS_URL }}
