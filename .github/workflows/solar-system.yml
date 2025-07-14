@@ -135,6 +135,6 @@ jobs:
 
     integration-testing:
       needs: dev-deploy
-      uses: ./.github/workflows/reusable-worflow.yml
+      uses: ./.github/workflows/reusable-workflow.yml
       with:
         config-path: ${{ needs.dev-deploy.outputs.APP_INGRESS_URL }}
